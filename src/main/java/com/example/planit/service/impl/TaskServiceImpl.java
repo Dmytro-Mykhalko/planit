@@ -25,8 +25,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void save(TaskEntity entity) {
-        repository.save(entity);
+    public TaskEntity save(TaskEntity entity) {
+        return repository.save(entity);
     }
 
     @Override

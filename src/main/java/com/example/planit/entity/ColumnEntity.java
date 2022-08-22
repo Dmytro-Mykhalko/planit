@@ -10,7 +10,6 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "column")
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,14 +18,9 @@ public class ColumnEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
     private String name;
-
-    @Column(name = "order")
-    private Integer order;
 
     @OneToMany(mappedBy = "column",
                 fetch = FetchType.EAGER)
@@ -35,7 +29,6 @@ public class ColumnEntity {
     @ManyToOne(fetch = FetchType.LAZY,
             optional = false,
             cascade = CascadeType.ALL)
-    @JoinColumn(name = "board_id", referencedColumnName = "id")
     private BoardEntity board;
 
 }

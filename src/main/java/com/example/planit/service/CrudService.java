@@ -7,7 +7,7 @@ public interface CrudService<T> {
 
     T getById(int id);
 
-    void save(T entity);
+    T save(T entity);
 
     void delete(T entity);
 }

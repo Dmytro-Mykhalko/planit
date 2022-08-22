@@ -25,8 +25,8 @@ public class ColumnServiceImpl implements ColumnService {
     }
 
     @Override
-    public void save(ColumnEntity entity) {
-        repository.save(entity);
+    public ColumnEntity save(ColumnEntity entity) {
+        return repository.save(entity);
     }
 
     @Override
