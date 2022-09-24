@@ -1,6 +1,7 @@
 package com.example.planit.controller;
 
 import com.example.planit.entity.UserEntity;
+import com.example.planit.repository.UserRepository;
 import com.example.planit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,30 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String getLoginPage() {
         return "html/auth/login";
     }
-
-//    @PostMapping("/login")
-//    public String processLogin(@ModelAttribute String email,
-//                               @ModelAttribute String password) {
-//        System.out.println("Password encoder" + passwordEncoder);
-//        System.out.println(email + " " + password);
-//        UserEntity user = userService.findByEmail(email)
-//                .orElseThrow(() ->
-//                        new UsernameNotFoundException("Invalid email or password")
-//                );
-//        log.info("User with email found");
-//        if (passwordEncoder.matches(password, user.getPassword())) {
-//            log.info("Credentials are OK");
-//            return "redirect:/home";
-//        } else {
-//            throw new BadCredentialsException("Invalid email or password");
-//        }
-//    }
 
     @GetMapping("/signup")
     public String getSignupPage(Model model) {
@@ -57,7 +41,7 @@ public class AuthController {
     @PostMapping("/signup")
     public String processSignup(@ModelAttribute UserEntity user) {
         String email = user.getEmail().toLowerCase();
-        if (userService.findByEmail(email).isPresent()) {
+        if (userRepository.findByEmail(email).isPresent()) {
             log.info("There is already a user with such email: " + user);
             return "html/auth/signup";
         }
@@ -67,10 +51,5 @@ public class AuthController {
         userService.save(user);
         log.info("Created a new user: " + user);
         return "redirect:/login";
-    }
-
-    @GetMapping("/logout")
-    public String processLogout(@ModelAttribute UserEntity user) {
-        return "redirect:/";
     }
 }

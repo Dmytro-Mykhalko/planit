@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService extends CrudService<UserEntity> {
-    Optional<UserEntity> findByEmail(String email);
+    UserEntity findByEmail(String email);
     BoardEntity addBoard(UserEntity user, BoardEntity board);
 
     List<BoardEntity> getBoardList(UserEntity user);
