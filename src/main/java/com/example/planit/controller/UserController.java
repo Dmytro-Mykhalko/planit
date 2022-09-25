@@ -29,15 +29,5 @@ public class UserController {
         return "html/index";
     }
 
-    @GetMapping("/home")
-    public String getBoards(Authentication authentication, Model model) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        UserEntity user = userService.findByEmail(userDetails.getUsername());
-        List<BoardEntity> boardList = userService.getBoardList(user);
-
-        model.addAttribute("user", user);
-        model.addAttribute("boards", boardList);
-
-        return "html/user/home";
-    }
+    // settings
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h2 th:text="${user.firstName + ' ' + user.lastName}" />
+    <div class="add_new_board">
+        <form th:action="@{/boards}" th:object="${newBoard}" method="post">
+            <label for="title">New Board</label>
+            <input id="title" type="text" th:field="*{name}" />
+            <input type="submit" value="Add">
+        </form>
+    </div>
+    <div class="my_boards">
+        <h3>My Boards</h3>
+        <div class="board" th:each="board: ${boards}">
+            <p th:text="${board.name}" />
+        </div>
+    </div>
+</body>
+</html>

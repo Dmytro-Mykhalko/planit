@@ -9,6 +9,4 @@ import java.util.Optional;
 public interface UserService extends CrudService<UserEntity> {
     UserEntity findByEmail(String email);
     BoardEntity addBoard(UserEntity user, BoardEntity board);
-
-    List<BoardEntity> getBoardList(UserEntity user);
 }

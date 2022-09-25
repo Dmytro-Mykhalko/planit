@@ -59,10 +59,4 @@ public class UserServiceImpl implements UserService {
         user.getBoards().add(board);
         return board;
     }
-
-    @Override
-    public List<BoardEntity> getBoardList(UserEntity user) {
-        log.info("Getting all boards from user " + user.getEmail());
-        return user.getBoards();
-    }
 }

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
+/*
+* tbd: add mail verification and google oauth
+* */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
