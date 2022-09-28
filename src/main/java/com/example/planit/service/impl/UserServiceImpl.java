@@ -7,6 +7,8 @@ import com.example.planit.repository.UserRepository;
 import com.example.planit.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -53,10 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BoardEntity addBoard(UserEntity user, BoardEntity board) {
-        log.info("Adding a board " + board.getName());
-        boardRepository.save(board);
-        user.getBoards().add(board);
-        return board;
+    public UserEntity getUserFromAuth(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return findByEmail(userDetails.getUsername());
     }
 }

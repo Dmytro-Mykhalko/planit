@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${board.name}" />
+</head>
+<body>
+    <div class="header">
+        <h2 th:text="${board.name}"/>
+    </div>
+    <div class="columns">
+        <div class="add_column">
+            <form th:action="@{/boards/{boardName}(boardName = ${board.name})}"
+                  th:object="${newColumn}" method="post">
+                <label for="column_name">New Column</label>
+                <input id="column_name" type="text" th:field="${newColumn.name}" />
+                <input type="submit" value="Add">
+            </form>
+        </div>
+        <div class="column" th:each="column: ${columns}">
+            <h3 th:text="${column.name}" />
+            <div class="add_task">
+                <form th:action="@{/boards/{boardName}/{columnId}(boardName=${board.name}, columnId=${column.id})}"
+                      th:object="${newTask}" method="post">
+                    <label for="task_name">New Task</label>
+                    <input id="task_name" type="text" th:field="${newTask.name}" />
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+            <div class="tasks">
+                <div class="task" th:each="task: ${column.getTasks()}">
+                    <p th:text="${task.name}" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

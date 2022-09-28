@@ -6,6 +6,7 @@ import com.example.planit.repository.BoardRepository;
 import com.example.planit.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-    BoardRepository boardRepository;
+    private final BoardRepository boardRepository;
 
     @Override
     public List<BoardEntity> findAll() {
@@ -38,8 +39,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardEntity> getBoardList(UserEntity user) {
-        log.info("Getting all boards from user " + user.getEmail());
-        return user.getBoards();
+    public BoardEntity getBoardByName(UserEntity user, String boardName) {
+        return boardRepository.findByUserAndName(user.getId(), boardName)
+                .orElseThrow(() -> new IllegalArgumentException("Board NOT FUND with name: " + boardName));
     }
 }

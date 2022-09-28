@@ -11,14 +11,16 @@
     <div class="add_new_board">
         <form th:action="@{/boards}" th:object="${newBoard}" method="post">
             <label for="title">New Board</label>
-            <input id="title" type="text" th:field="*{name}" />
+            <input id="title" type="text" th:field="${newBoard.name}" />
             <input type="submit" value="Add">
         </form>
     </div>
     <div class="my_boards">
         <h3>My Boards</h3>
         <div class="board" th:each="board: ${boards}">
-            <p th:text="${board.name}" />
+            <a th:href="@{/boards/{name}(name=${board.name})}">
+                <p th:text="${board.name}" />
+            </a>
         </div>
     </div>
 </body>
