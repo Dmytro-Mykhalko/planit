@@ -22,7 +22,7 @@ public class TaskController {
 
     // add a user authentication
     @PostMapping("/{boardId}/{columnId}")
-    public String addTask(@PathVariable String boardId,
+    public String addTask(@PathVariable int boardId,
                           @PathVariable int columnId,
                           @ModelAttribute TaskEntity task) {
         ColumnEntity column = columnService.getById(columnId);

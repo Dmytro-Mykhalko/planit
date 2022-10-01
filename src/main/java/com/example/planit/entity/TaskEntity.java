@@ -24,9 +24,7 @@ public class TaskEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private ColumnEntity column;
-
-
 }
