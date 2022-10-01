@@ -1,36 +1,51 @@
 package com.example.planit.service.impl;
 
 import com.example.planit.entity.BoardEntity;
+import com.example.planit.entity.UserEntity;
 import com.example.planit.repository.BoardRepository;
 import com.example.planit.service.BoardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-    @Autowired
-    BoardRepository repository;
+    private final BoardRepository boardRepository;
 
     @Override
     public List<BoardEntity> findAll() {
-        return repository.findAll();
+        return boardRepository.findAll();
     }
 
     @Override
     public BoardEntity getById(int id) {
-        return repository.getReferenceById(id);
+        return boardRepository.getReferenceById(id);
     }
 
     @Override
-    public void save(BoardEntity entity) {
-        repository.save(entity);
+    public BoardEntity save(BoardEntity entity) {
+        return boardRepository.save(entity);
     }
 
     @Override
     public void delete(BoardEntity entity) {
-        repository.delete(entity);
+        boardRepository.delete(entity);
+    }
+
+    @Override
+    public BoardEntity getBoardByName(UserEntity user, String boardName) {
+        return boardRepository.findByUserAndName(user.getId(), boardName)
+                .orElseThrow(() -> new IllegalArgumentException("Board NOT FUND with name: " + boardName));
+    }
+
+    @Override
+    public void deleteById(int id) {
+        boardRepository.deleteById(id);
     }
 }

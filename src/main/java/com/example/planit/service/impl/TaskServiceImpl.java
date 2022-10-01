@@ -12,25 +12,30 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     @Autowired
-    TaskRepository repository;
+    TaskRepository taskRepository;
 
     @Override
     public List<TaskEntity> findAll() {
-        return repository.findAll();
+        return taskRepository.findAll();
     }
 
     @Override
     public TaskEntity getById(int id) {
-        return repository.getReferenceById(id);
+        return taskRepository.getReferenceById(id);
     }
 
     @Override
-    public void save(TaskEntity entity) {
-        repository.save(entity);
+    public TaskEntity save(TaskEntity entity) {
+        return taskRepository.save(entity);
     }
 
     @Override
     public void delete(TaskEntity entity) {
-        repository.delete(entity);
+        taskRepository.delete(entity);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        taskRepository.deleteById(id);
     }
 }

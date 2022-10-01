@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h2 th:text="${user.firstName + ' ' + user.lastName}" />
+    <div class="add_new_board">
+        <form th:action="@{/boards}" th:object="${newBoard}" method="post">
+            <label for="title">New Board</label>
+            <input id="title" type="text" th:field="${newBoard.name}" />
+            <input type="submit" value="Add">
+        </form>
+    </div>
+    <div class="my_boards">
+        <h3>My Boards</h3>
+        <div class="board" th:each="board: ${boards}">
+            <a th:href="@{/boards/{id}(id=${board.id})}">
+                <p th:text="${board.name}" />
+            </a>
+            <p th:text="${board.id}"/>
+            <a th:href="@{/boards/{id_to_edit}/edit(id_to_edit=${board.id})}">
+                <p>Edit</p>
+            </a>
+            <form th:action="@{/boards}" th:method="delete">
+                <input type="hidden" name="boardId" th:value="${board.id}">
+                <input type="submit" value="Delete" onclick="return confirm('Are you sure?')">
+            </form>
+            <hr />
+        </div>
+    </div>
+</body>
+</html>

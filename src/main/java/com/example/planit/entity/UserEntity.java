@@ -1,6 +1,5 @@
 package com.example.planit.entity;
 
-import com.example.planit.entity.enums.BoardAccessLevel;
 import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -9,11 +8,9 @@ import lombok.AllArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor
@@ -31,16 +28,15 @@ public class UserEntity {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
 
-    @Column(name = "avatar_link")
-    private String avatarLink;
+    @Column(name = "enabled")
+    private Boolean enabled;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<UserBoardEntity> userBoard;
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,  orphanRemoval = true)
+    private List<BoardEntity> boards;
 }
