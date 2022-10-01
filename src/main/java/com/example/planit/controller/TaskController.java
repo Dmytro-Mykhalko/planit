@@ -21,13 +21,13 @@ public class TaskController {
     private final TaskService taskService;
 
     // add a user authentication
-    @PostMapping("/{boardName}/{columnId}")
-    public String addTask(@PathVariable String boardName,
+    @PostMapping("/{boardId}/{columnId}")
+    public String addTask(@PathVariable String boardId,
                           @PathVariable int columnId,
                           @ModelAttribute TaskEntity task) {
         ColumnEntity column = columnService.getById(columnId);
         task.setColumn(column);
         taskService.save(task);
-        return String.format("redirect:/boards/%s", boardName);
+        return String.format("redirect:/boards/%s", boardId);
     }
 }

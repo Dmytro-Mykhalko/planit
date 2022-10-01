@@ -21,7 +21,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final BoardRepository boardRepository;
 
     @Override
     public List<UserEntity> findAll() {
@@ -58,5 +57,10 @@ public class UserServiceImpl implements UserService {
     public UserEntity getUserFromAuth(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return findByEmail(userDetails.getUsername());
+    }
+
+    @Override
+    public void deleteById(int id) {
+        userRepository.deleteById(id);
     }
 }

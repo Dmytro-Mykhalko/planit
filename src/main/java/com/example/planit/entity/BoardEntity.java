@@ -22,12 +22,12 @@ public class BoardEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board",
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     private List<ColumnEntity> columns;
 
-    @ManyToOne(fetch = FetchType.EAGER,
-            optional = false,
-            cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ToString.Exclude
     private UserEntity user;
-
 }

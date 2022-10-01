@@ -31,6 +31,16 @@ public class BoardController {
         return "html/user/home";
     }
 
+    @GetMapping("/{boarId}")
+    public String getBoardPage(@PathVariable("boarId") int id, Model model) {
+        BoardEntity board = boardService.getById(id);
+        model.addAttribute("board", board);
+        model.addAttribute("columns", board.getColumns());
+        model.addAttribute("newColumn", new ColumnEntity());
+        model.addAttribute("newTask", new TaskEntity());
+        return "html/user/board";
+    }
+
     @PostMapping("")
     public String addBoard(Authentication authentication, @ModelAttribute BoardEntity newBoard) {
         UserEntity user = userService.getUserFromAuth(authentication);
@@ -39,16 +49,25 @@ public class BoardController {
         return "redirect:/boards";
     }
 
-    @GetMapping("/{boardName}")
-    public String getBoardPage(Authentication authentication,
-                               @PathVariable String boardName,
-                               Model model) {
-        UserEntity user = userService.getUserFromAuth(authentication);
-        BoardEntity board = boardService.getBoardByName(user, boardName);
+    @GetMapping("/{boardIdToEdit}/edit")
+    public String getBoardEditPage(@PathVariable("boardIdToEdit") int id,
+                                   Model model) {
+        BoardEntity board = boardService.getById(id);
         model.addAttribute("board", board);
-        model.addAttribute("columns", board.getColumns());
-        model.addAttribute("newColumn", new ColumnEntity());
-        model.addAttribute("newTask", new TaskEntity());
-        return "html/user/board";
+        return "html/user/board_edit";
+    }
+
+    @PatchMapping("")
+    public String updateBoard(Authentication authentication, @ModelAttribute BoardEntity board) {
+        UserEntity user = userService.getUserFromAuth(authentication);
+        board.setUser(user);
+        boardService.save(board);
+        return "redirect:/boards";
+    }
+
+    @DeleteMapping("")
+    public String deleteBoard(@RequestParam("boardId") int id) {
+        boardService.deleteById(id);
+        return "redirect:/boards";
     }
 }

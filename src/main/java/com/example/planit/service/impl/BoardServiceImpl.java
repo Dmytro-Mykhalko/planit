@@ -43,4 +43,9 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findByUserAndName(user.getId(), boardName)
                 .orElseThrow(() -> new IllegalArgumentException("Board NOT FUND with name: " + boardName));
     }
+
+    @Override
+    public void deleteById(int id) {
+        boardRepository.deleteById(id);
+    }
 }

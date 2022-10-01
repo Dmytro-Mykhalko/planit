@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit board</title>
+</head>
+<body>
+    <a onclick="history.go(-1)">Back</a>
+    <h2 th:text="${'Edit board ' + board.name}" />
+    <div class="board">
+        <form th:action="@{/boards}" th:object="${board}" th:method="patch">
+            <input type="text" th:field="*{name}" th:placeholder="${board.name}">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{columns}">
+            <input type="submit" value="Save" onclick="return confirm('Your changes will be applied.')">
+        </form>
+    </div>
+</body>
+</html>

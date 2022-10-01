@@ -37,7 +37,6 @@ public class UserEntity {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,  orphanRemoval = true)
     private List<BoardEntity> boards;
-
 }

@@ -1,9 +1,6 @@
 package com.example.planit.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -26,12 +23,12 @@ public class ColumnEntity {
     private String name;
 
     @OneToMany(mappedBy = "column",
-                fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     private List<TaskEntity> tasks;
 
-    @ManyToOne(fetch = FetchType.LAZY,
-            optional = false,
-            cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
     private BoardEntity board;
 
 }

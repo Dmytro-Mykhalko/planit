@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -25,14 +22,18 @@ public class ColumnController {
     private final BoardService boardService;
     private final ColumnService columnService;
 
-    @PostMapping("/{boardName}")
-    public String addColumn(Authentication authentication,
-                            @PathVariable String boardName,
-                            @ModelAttribute ColumnEntity column) {
-        UserEntity user = userService.getUserFromAuth(authentication);
-        BoardEntity board = boardService.getBoardByName(user, boardName);
+    @PostMapping("/{boardId}")
+    public String addColumn(@PathVariable int boardId, @ModelAttribute ColumnEntity column) {
+        BoardEntity board = boardService.getById(boardId);
         column.setBoard(board);
         columnService.save(column);
-        return String.format("redirect:/boards/%s", boardName);
+        return String.format("redirect:/boards/%s", boardId);
     }
+
+//    @PatchMapping("/{boardName}/{columnId}")
+//    public String updateColumnName(@PathVariable String boardName,
+//                                   @PathVariable int columnId) {
+//
+//        return String.format("redirect:/boards/%s", boardName);
+//    }
 }

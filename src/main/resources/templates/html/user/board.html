@@ -12,7 +12,7 @@
     </div>
     <div class="columns">
         <div class="add_column">
-            <form th:action="@{/boards/{boardName}(boardName = ${board.name})}"
+            <form th:action="@{/boards/{boardId}(boardId = ${board.id})}"
                   th:object="${newColumn}" method="post">
                 <label for="column_name">New Column</label>
                 <input id="column_name" type="text" th:field="${newColumn.name}" />
@@ -22,7 +22,7 @@
         <div class="column" th:each="column: ${columns}">
             <h3 th:text="${column.name}" />
             <div class="add_task">
-                <form th:action="@{/boards/{boardName}/{columnId}(boardName=${board.name}, columnId=${column.id})}"
+                <form th:action="@{/boards/{boardId}/{columnId}(boardId=${board.id}, columnId=${column.id})}"
                       th:object="${newTask}" method="post">
                     <label for="task_name">New Task</label>
                     <input id="task_name" type="text" th:field="${newTask.name}" />

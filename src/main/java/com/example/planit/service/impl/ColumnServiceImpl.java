@@ -4,7 +4,6 @@ import com.example.planit.entity.ColumnEntity;
 import com.example.planit.repository.ColumnRepository;
 import com.example.planit.service.ColumnService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,25 +12,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ColumnServiceImpl implements ColumnService {
 
-    private final ColumnRepository repository;
+    private final ColumnRepository columnRepository;
 
     @Override
     public List<ColumnEntity> findAll() {
-        return repository.findAll();
+        return columnRepository.findAll();
     }
 
     @Override
     public ColumnEntity getById(int id) {
-        return repository.getReferenceById(id);
+        return columnRepository.getReferenceById(id);
     }
 
     @Override
     public ColumnEntity save(ColumnEntity entity) {
-        return repository.save(entity);
+        return columnRepository.save(entity);
     }
 
     @Override
     public void delete(ColumnEntity entity) {
-        repository.delete(entity);
+        columnRepository.delete(entity);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        columnRepository.deleteById(id);
     }
 }
