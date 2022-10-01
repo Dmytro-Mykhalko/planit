@@ -1,15 +1,10 @@
 package com.example.planit.entity;
 
 
-import com.example.planit.entity.enums.BoardAccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "board")
@@ -27,10 +22,12 @@ public class BoardEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board",
+            fetch = FetchType.EAGER,
+            orphanRemoval = true)
     private List<ColumnEntity> columns;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-    private List<UserBoardEntity> userBoard;
-
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ToString.Exclude
+    private UserEntity user;
 }
