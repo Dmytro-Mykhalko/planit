@@ -4,7 +4,7 @@ package com.example.planit.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "board")
@@ -22,12 +22,11 @@ public class BoardEntity {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "board",
-            fetch = FetchType.EAGER,
-            orphanRemoval = true)
-    private List<ColumnEntity> columns;
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, orphanRemoval = true)
+    private Set<ColumnEntity> columns;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private UserEntity user;
 }

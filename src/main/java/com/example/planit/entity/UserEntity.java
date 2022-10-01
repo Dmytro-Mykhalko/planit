@@ -1,13 +1,10 @@
 package com.example.planit.entity;
 
-import lombok.Data;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -37,6 +34,7 @@ public class UserEntity {
     @Column(name = "enabled")
     private Boolean enabled;
 
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,  orphanRemoval = true)
-    private List<BoardEntity> boards;
+    private Set<BoardEntity> boards;
 }
