@@ -30,10 +30,18 @@ public class ColumnController {
         return String.format("redirect:/boards/%s", boardId);
     }
 
-//    @PatchMapping("/{boardName}/{columnId}")
-//    public String updateColumnName(@PathVariable String boardName,
-//                                   @PathVariable int columnId) {
-//
-//        return String.format("redirect:/boards/%s", boardName);
-//    }
+    @DeleteMapping("/{boardId}")
+    public String deleteColumn(@PathVariable int boardId, @RequestParam int columnId) {
+        columnService.deleteById(columnId);
+        return String.format("redirect:/boards/%s", boardId);
+    }
+
+    @PatchMapping("/{boardId}")
+    public String updateColumnName(@PathVariable int boardId, @RequestParam int columnId,
+                                   @RequestParam String newColumnName) {
+        ColumnEntity columnToUpdate = columnService.getById(columnId);
+        columnToUpdate.setName(newColumnName);
+        columnService.save(columnToUpdate);
+        return String.format("redirect:/boards/%s", boardId);
+    }
 }
