@@ -19,14 +19,25 @@
                 <input type="submit" value="Add">
             </form>
         </div>
+        <br>
+        <hr />
         <div class="column" th:each="column: ${columns}">
-            <h3 th:text="${column.name}" />
+            <form th:action="@{/boards/{boardId}(boardId = ${board.id})}" th:method="patch">
+                <input type="hidden" name="columnId" th:value="${column.id}" />
+                <input type="text" name="newColumnName" th:value="${column.name}">
+                <input type="submit" value="Save">
+            </form>
+            <form th:action="@{/boards/{boardId}(boardId = ${board.id})}" th:method="delete">
+                <input type="hidden" name="columnId" th:value="${column.id}" />
+                <input type="submit" value="Delete Column"
+                       onclick="return confirm('Are you sure you want to delete the column?')" />
+            </form>
+            <br />
             <div class="add_task">
                 <form th:action="@{/boards/{boardId}/{columnId}(boardId=${board.id}, columnId=${column.id})}"
                       th:object="${newTask}" method="post">
-                    <label for="task_name">New Task</label>
-                    <input id="task_name" type="text" th:field="${newTask.name}" />
-                    <input type="submit" value="Add">
+                    <input type="text" th:field="${newTask.name}" />
+                    <input type="submit" value="Add Task">
                 </form>
             </div>
             <div class="tasks">
@@ -34,6 +45,7 @@
                     <p th:text="${task.name}" />
                 </div>
             </div>
+            <hr />
         </div>
     </div>
 </body>
