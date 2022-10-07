@@ -42,7 +42,9 @@
             </div>
             <div class="tasks">
                 <div class="task" th:each="task: ${column.getTasks()}">
-                    <p th:text="${task.name}" />
+                    <a th:href="@{/boards/{boardId}/{columnId}/{taskId}(boardId=${board.id}, columnId=${column.id}, taskId=${task.id})}">
+                        <p th:text="${task.name}" />
+                    </a>
                 </div>
             </div>
             <hr />

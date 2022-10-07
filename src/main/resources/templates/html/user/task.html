@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${task.name}" />
+</head>
+<body>
+    <h2 th:text="${task.name}" />
+    <form id="task_form" th:action="@{/boards/{boardId}/{columnId}(boardId=${board.id}, columnId=${column.id})}"
+            th:object="${task}" th:method="patch">
+        <input type="hidden" th:field="*{id}">
+        <label for="task_name">Name</label>
+        <input id="task_name" type="text" th:field="*{name}" th:placeholder="*{name}">
+        <label for="task_description">Description</label>
+        <input id="task_description" type="text" th:field="*{description}" th:placeholder="*{description}">
+        <input type="hidden" th:field="*{column}">
+        <label for="update_column">Column</label>
+        <select name="updateColumnId" id="update_column">
+            <option th:each="update_column: ${board.columns}" th:value="${update_column.id}"
+                    th:text="${update_column.name}" th:selected="${column.id}" />
+        </select>
+        <input type="submit" value="Save Changes"
+               onclick="return confirm('Save changes?')">
+    </form>
+
+    <form th:action="@{/boards/{boardId}/{columnId}(boardId=${board.id}, columnId=${column.id})}" th:method="delete">
+        <input type="hidden" name="taskId" th:value="${task.id}">
+        <input type="submit" th:value="Delete"
+               onclick="return confirm('Delete this task?')">
+    </form>
+</body>
+</html>
